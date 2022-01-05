@@ -79,18 +79,19 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Column(
           children: [
             Container(
+              margin: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   'Bandung Wetan, Dzuhur 12:08',
-
                 ),
                 Text(
                   "11 Sya'ban 1442 H",
-                  textAlign: TextAlign.right,
                 ),
               ],
-            )),
+            )
+            ),
             SingleChildScrollView(
               child: Container(
                   child: CarouselSlider(
