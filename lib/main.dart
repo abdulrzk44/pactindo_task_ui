@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -48,73 +50,146 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  List<Container> myGrid = List.generate(8, (index) {
+    List<String> gridText = [
+      'Rekening Saya',
+      'Transfer',
+      'Pembelian',
+      'Pembayaran',
+      'Favorit',
+      'Transaksi Terjadwal',
+      'Layanan Islami',
+      'Semua Menu'
+    ];
+    return Container(
+      child: Center(child: Text(gridText[index])),
+      decoration: BoxDecoration(
+        color: Color.fromARGB(255, Random().nextInt(255), Random().nextInt(255),
+            Random().nextInt(255)),
+        borderRadius: BorderRadius.circular(5),
+      ),
+    );
+  });
+  List<Color> myColor = [
+    Colors.orange,
+    Colors.blue,
+    Colors.green,
+    Colors.amber,
+    Colors.red
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Color(0xfff58220),
-          leading: Builder(
-            builder: (BuildContext context) {
-              return IconButton(
-                icon: const Icon(Icons.menu),
-                onPressed: () {
-                  Scaffold.of(context).openDrawer();
-                },
-                tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-              );
-            },
-          ),
-          title: Text("Tepat"),
-          centerTitle: true,
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.notifications),
+      appBar: AppBar(
+        backgroundColor: Color(0xfff58220),
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: const Icon(Icons.menu),
               onPressed: () {
                 Scaffold.of(context).openDrawer();
               },
               tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-            ),
-          ],
+            );
+          },
         ),
-        body: Column(
-          children: [
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        title: Text("Tepat"),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.notifications),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+            tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          Container(
+              padding: EdgeInsets.all(10),
+              color: Colors.lightBlue[100],
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Bandung Wetan, Dzuhur 12:08',
+                  ),
+                  Text(
+                    "11 Sya'ban 1442 H",
+                  ),
+                ],
+              )),
+          Expanded(
+            child: ListView(
               children: [
-                Text(
-                  'Bandung Wetan, Dzuhur 12:08',
+                Container(
+                  margin: EdgeInsets.only(left: 20, top: 10),
+                  child: Text(
+                    "Assalamu'alaikum, Muhammad Imam",
+                  ),
                 ),
-                Text(
-                  "11 Sya'ban 1442 H",
+                Container(
+                  child: CarouselSlider(
+                    options: CarouselOptions(
+                      height: 180,
+                      enableInfiniteScroll: false,
+                      viewportFraction: 0.92,
+                      autoPlay: true,
+                    ),
+                    items: [1, 2, 3, 4, 5]
+                        .map((item) => Container(
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: 6, vertical: 15),
+                              child: Center(child: Text(item.toString())),
+                              decoration: BoxDecoration(
+                                color: myColor[item - 1],
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ))
+                        .toList(),
+                  ),
+                ),
+                Container(
+                  height: 190,
+                  // color: Colors.lightBlue,
+                  child: GridView.count(
+                    // primary: false,
+                    padding: const EdgeInsets.all(20),
+                    crossAxisSpacing: 20,
+                    mainAxisSpacing: 20,
+                    crossAxisCount: 4,
+                    children: myGrid,
+                  ),
+                ),
+                Container(
+                  child: CarouselSlider(
+                    options: CarouselOptions(
+                      height: 180,
+                      enableInfiniteScroll: false,
+                      viewportFraction: 0.92,
+                      autoPlay: true,
+                    ),
+                    items: [1, 2, 3, 4, 5]
+                        .map((item) => Container(
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: 6, vertical: 15),
+                              child: Center(child: Text(item.toString())),
+                              decoration: BoxDecoration(
+                                color: myColor[item - 1],
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ))
+                        .toList(),
+                  ),
                 ),
               ],
-            )
             ),
-            SingleChildScrollView(
-              child: Container(
-                  child: CarouselSlider(
-                options: CarouselOptions(
-                  height: 200,
-                  enableInfiniteScroll: false,
-                  viewportFraction: 0.9,
-                  autoPlay: true,
-                ),
-                items: [1, 2, 3, 4, 5]
-                    .map((item) => Container(
-                          margin:
-                              EdgeInsets.symmetric(horizontal: 8, vertical: 20),
-                          child: Center(child: Text(item.toString())),
-                          decoration: BoxDecoration(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ))
-                    .toList(),
-              )),
-            ),
-          ],
-        ));
+          ),
+        ],
+      ),
+    );
   }
 }
