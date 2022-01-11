@@ -186,21 +186,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class ButtonItem extends StatelessWidget {
-  late final String route;
-
-  ButtonItem(this.route);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      onTap: () {
-        Navigator.pushNamed(context, route);
-      },
-    );
-  }
-}
-
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -288,9 +273,7 @@ class EulaPage extends StatelessWidget {
     // loadJsonData();
     print('AKKKKKMMMMMMMMMMM');
     print(loadJsonData());
-    return new SingleChildScrollView(
-      child: new Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+    return ListView(
         children: [
           Container(
             height: MediaQuery.of(context).size.height,
@@ -322,7 +305,6 @@ class EulaPage extends StatelessWidget {
             ),
           ),
         ],
-      ),
     );
   }
 }
