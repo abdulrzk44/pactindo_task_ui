@@ -37,29 +37,24 @@ class KtpPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
               child: TextFormField(
                 validator: (value) {
-                  String valid = '0';
                   loadJsonData().then((valueKtp){
                     String? noKTP = valueKtp.noKTP;
-                    if (value != noKTP) {
-
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter some text';
+                    } else if (value != noKTP) {
+                      return 'Nomor KTP tidak valid';
                     }
-                    valid = '1';
+                    Navigator.pushNamed(context, '/email');
                   });
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }else if(valid != '1'){
-                    return 'Nomor KTP tidak valid';
-                  }
-                  Navigator.pushNamed(context, '/email');
                 },
               ),
             ),
             ElevatedButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('No KTP Valid')),
-                  );
+                  // ScaffoldMessenger.of(context).showSnackBar(
+                  //   const SnackBar(content: Text('No KTP Valid')),
+                  // );
                 }
               },
               child: const Text('Submit'),
