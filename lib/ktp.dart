@@ -1,10 +1,72 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:pactindo_task_ui/model/ktp_model.dart';
 
 class KtpPage extends StatelessWidget {
-  const KtpPage({Key? key}) : super(key: key);
+  KtpPage({Key? key}) : super(key: key);
+
+  final _formKey = GlobalKey<FormState>();
+
+  Future<KtpModel> loadJsonData() async {
+    var jsonText = await rootBundle.loadString('assets/data/dummy_ktp.json');
+    KtpModel ktpModel = KtpModel.fromJson(jsonDecode(jsonText));
+    return ktpModel;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xfff58220),
+        title: Text("Validasi KTP"),
+        centerTitle: true,
+      ),
+      body: Form(
+        key: _formKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'Masukan Nomor KTP',
+              style: TextStyle(fontSize: 25),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+              child: TextFormField(
+                validator: (value) {
+                  String valid = '0';
+                  loadJsonData().then((valueKtp){
+                    String? noKTP = valueKtp.noKTP;
+                    if (value != noKTP) {
+
+                    }
+                    valid = '1';
+                  });
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter some text';
+                  }else if(valid != '1'){
+                    return 'Nomor KTP tidak valid';
+                  }
+                  Navigator.pushNamed(context, '/email');
+                },
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('No KTP Valid')),
+                  );
+                }
+              },
+              child: const Text('Submit'),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

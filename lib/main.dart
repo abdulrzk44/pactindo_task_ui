@@ -40,6 +40,7 @@ class MyHomePage extends StatelessWidget {
     return ValueListenableBuilder(
       builder: (context, value, g) {
         return MaterialApp(
+          title: title,
           initialRoute: '/eula',
           debugShowCheckedModeBanner: false,
           routes: {

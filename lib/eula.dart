@@ -30,7 +30,6 @@ class _EulaPageState extends State<EulaPage> {
   }
 
   Widget build(BuildContext context) {
-    print(loadJsonData());
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xfff58220),
@@ -74,7 +73,7 @@ class _EulaPageState extends State<EulaPage> {
                             ),
                             onPressed: () {
                               if (isChecked) { /* Kasih validasi kalau checkbox belum diceklis, button gaboleh ada aksi */
-                                Navigator.pushNamed(context, '/home');
+                                Navigator.pushNamed(context, '/ktp');
                                 setState(() {
                                   isChecked = false;
                                 });
