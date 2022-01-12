@@ -5,9 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pactindo_task_ui/model/ktp_model.dart';
 
+import 'email.dart';
+
 class KtpPage extends StatelessWidget {
   KtpPage({Key? key}) : super(key: key);
 
+  final TextEditingController _inputController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   Future<KtpModel> loadJsonData() async {
@@ -18,6 +21,11 @@ class KtpPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String? noKTP;
+    loadJsonData().then((valueKtp) {
+      noKTP = valueKtp.noKTP;
+    });
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xfff58220),
@@ -36,28 +44,30 @@ class KtpPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
               child: TextFormField(
+                controller: _inputController,
                 validator: (value) {
-                  loadJsonData().then((valueKtp){
-                    String? noKTP = valueKtp.noKTP;
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    } else if (value != noKTP) {
-                      return 'Nomor KTP tidak valid';
-                    }
-                    Navigator.pushNamed(context, '/email');
-                  });
+                  if (value != noKTP) {
+                    return 'Nomor KTP tidak valid';
+                  }
+                  Navigator.pushNamed(context, EmailPage.routes, arguments: ["dada", "dede"]);
                 },
               ),
             ),
-            ElevatedButton(
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  // ScaffoldMessenger.of(context).showSnackBar(
-                  //   const SnackBar(content: Text('No KTP Valid')),
-                  // );
-                }
+            ValueListenableBuilder<TextEditingValue>(
+              valueListenable: _inputController,
+              builder: (context, value, child) {
+                return ElevatedButton(
+                  onPressed: value.text.isNotEmpty ? (){
+                    if (_formKey.currentState!.validate()) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Nomor KTP Valid')),
+                      );
+                      // _inputController.dispose();
+                    }
+                  } : null,
+                  child: const Text('Submit'),
+                );
               },
-              child: const Text('Submit'),
             ),
           ],
         ),

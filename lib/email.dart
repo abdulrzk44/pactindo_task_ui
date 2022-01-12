@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class EmailPage extends StatelessWidget {
+  static const String routes = "/email";
   EmailPage({Key? key}) : super(key: key);
 
   final _formKey = GlobalKey<FormState>();
@@ -22,24 +23,13 @@ class EmailPage extends StatelessWidget {
             Text('Email', style: TextStyle(fontSize: 25),),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-              child: TextFormField(
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  Navigator.pushNamed(context, '/otp');
-                },
-              ),
+              child: TextFormField(),
             ),
             ElevatedButton(
               onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Processing Data')),
-                  );
-                }
+                Navigator.pushNamed(context, '/otp');
               },
-              child: const Text('Submit'),
+              child: const Text('Next'),
             ),
           ],
         ),
