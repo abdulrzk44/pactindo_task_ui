@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import 'model/eula_model.dart';
@@ -52,6 +53,8 @@ class _EulaPageState extends State<EulaPage> {
                   ),
                   Container(
                     padding: EdgeInsets.all(8.0),
+                    height: MediaQuery.of(context).size.height * 0.105,
+                    // color: Colors.blue,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

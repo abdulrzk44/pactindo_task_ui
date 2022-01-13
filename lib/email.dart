@@ -27,7 +27,7 @@ class EmailPage extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/otp');
+                Navigator.pushNamed(context, '/phone');
               },
               child: const Text('Next'),
             ),

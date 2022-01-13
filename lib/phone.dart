@@ -1,24 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class PasswordPage extends StatelessWidget {
-  PasswordPage({Key? key}) : super(key: key);
+class PhoneNumberPage extends StatelessWidget {
+  PhoneNumberPage({Key? key}) : super(key: key);
 
   final TextEditingController _inputController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  bool validateStructure(String value){
-    String  pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~])';
-    RegExp regExp = new RegExp(pattern);
-    return regExp.hasMatch(value);
-  }
-
   @override
   Widget build(BuildContext context) {
+    String? phoneNumber;
+    String otpCode = "";
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xfff58220),
-        title: Text("Password"),
+        title: Text("Telepon"),
         centerTitle: true,
       ),
       body: Form(
@@ -27,7 +23,7 @@ class PasswordPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Masukan Password',
+              'Masukan Nomor Telepon',
               style: TextStyle(fontSize: 25),
             ),
             Padding(
@@ -35,12 +31,12 @@ class PasswordPage extends StatelessWidget {
               child: TextFormField(
                 controller: _inputController,
                 validator: (value) {
-                  if (value!.length < 8){
-                    return 'Minimum 8 karakter';
-                  }else if (!validateStructure(value)) {
-                    return 'Syarat tidak cocok';
+                  phoneNumber = value;
+                  if (value!.length < 10 || value.length > 15) {
+                    return 'Nomor telepon tidak valid';
                   }
-                  Navigator.pushNamed(context, '/mpin');
+                  otpCode = phoneNumber!.substring(phoneNumber!.length - 6);
+                  Navigator.pushNamed(context, '/otp', arguments: [phoneNumber, otpCode]);
                 },
               ),
             ),
@@ -50,9 +46,9 @@ class PasswordPage extends StatelessWidget {
                 return ElevatedButton(
                   onPressed: value.text.isNotEmpty ? (){
                     if (_formKey.currentState!.validate()) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Password disimpan')),
-                      );
+                      // ScaffoldMessenger.of(context).showSnackBar(
+                      //   const SnackBar(content: Text('ok')),
+                      // );
                       // _inputController.dispose();
                     }
                   } : null,

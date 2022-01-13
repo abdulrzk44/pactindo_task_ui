@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pactindo_task_ui/confirm_mpin.dart';
 import 'package:pactindo_task_ui/password.dart';
+import 'package:pactindo_task_ui/phone.dart';
 import 'package:pactindo_task_ui/resi.dart';
 import 'package:pactindo_task_ui/username.dart';
 
@@ -48,10 +50,12 @@ class MyHomePage extends StatelessWidget {
             '/eula': (ctx) => EulaPage(),
             '/ktp': (ctx) => KtpPage(),
             '/email': (ctx) => EmailPage(),
+            '/phone': (ctx) => PhoneNumberPage(),
             '/otp': (ctx) => OtpPage(),
             '/username': (ctx) => UsernamePage(),
             '/password': (ctx) => PasswordPage(),
             '/mpin': (ctx) => MpinPage(),
+            '/confirm_mpin': (ctx) => ConfirmMpinPage(),
             '/resi': (ctx) => ResiPage(),
           },
         );

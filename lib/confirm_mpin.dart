@@ -4,14 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-class OtpPage extends StatefulWidget {
-  const OtpPage({Key? key}) : super(key: key);
+class ConfirmMpinPage extends StatefulWidget {
+  const ConfirmMpinPage({Key? key}) : super(key: key);
 
   @override
-  _OtpPageState createState() => _OtpPageState();
+  _ConfirmMpinPageState createState() => _ConfirmMpinPageState();
 }
 
-class _OtpPageState extends State<OtpPage> {
+class _ConfirmMpinPageState extends State<ConfirmMpinPage> {
   TextEditingController textEditingController = TextEditingController();
   StreamController<ErrorAnimationType>? errorController;
 
@@ -44,13 +44,10 @@ class _OtpPageState extends State<OtpPage> {
 
   @override
   Widget build(BuildContext context) {
-    final arguments = ModalRoute.of(context)!.settings.arguments as List;
-    String phoneNumber = arguments[0];
-    String otpCode = arguments[1];
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xfff58220),
-        title: Text("OTP"),
+        title: Text("KONFIRMASI MPIN"),
         centerTitle: true,
       ),
       body: GestureDetector(
@@ -61,28 +58,20 @@ class _OtpPageState extends State<OtpPage> {
           child: ListView(
             children: <Widget>[
               SizedBox(height: 8),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Text(
-                  'Verifikasi Nomor Telepon',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-                  textAlign: TextAlign.center,
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(vertical: 8.0),
+              //   child: Text(
+              //     'Verifikasi Nomor MpinPage',
+              //     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+              //     textAlign: TextAlign.center,
+              //   ),
+              // ),
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 30.0, vertical: 8),
+                const EdgeInsets.symmetric(horizontal: 30.0, vertical: 8),
                 child: RichText(
                   text: TextSpan(
-                      text: "Masukan kode OTP yang dikirim ke nomor ",
-                      children: [
-                        TextSpan(
-                            text: "$phoneNumber",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15)),
-                      ],
+                      text: "Masukan MPIN",
                       style: TextStyle(color: Colors.black54, fontSize: 15)),
                   textAlign: TextAlign.center,
                 ),
@@ -171,28 +160,13 @@ class _OtpPageState extends State<OtpPage> {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Text(
-                  //   "Didn't receive the code? ",
-                  //   style: TextStyle(color: Colors.black54, fontSize: 15),
-                  // ),
-                  TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: Text(
-                        "Kirim Ulang",
-                        style: TextStyle(
-                            color: Color(0xFF91D3B3),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16),
-                      ))
-                ],
               ),
               SizedBox(
                 height: 14,
               ),
               Container(
                 margin:
-                    const EdgeInsets.symmetric(vertical: 16.0, horizontal: 30),
+                const EdgeInsets.symmetric(vertical: 16.0, horizontal: 30),
                 child: ButtonTheme(
                   height: 50,
                   child: TextButton(
@@ -203,25 +177,25 @@ class _OtpPageState extends State<OtpPage> {
                         errorController!.add(ErrorAnimationType
                             .shake); // Triggering error shake animation
                         setState(() => emptyCells = true);
-                      } else if (currentText != otpCode) {
+                      } else if (currentText != "aaa") {
                         setState(
                               () {
-                            snackBar("Kode otp tidak valid");
+                            snackBar("MPIN tidak valid");
                           },
                         );
                       } else {
                         snackBar("Verifikasi berhasil");
-                        Navigator.pushNamed(context, '/username');
+                        Navigator.pushNamed(context, '/confirm_mpin');
                       }
                     },
                     child: Center(
                         child: Text(
-                      "Verifikasi".toUpperCase(),
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold),
-                    )),
+                          "Konfirmasi".toUpperCase(),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold),
+                        )),
                   ),
                 ),
                 decoration: BoxDecoration(
