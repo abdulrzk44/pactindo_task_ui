@@ -27,7 +27,9 @@ class KtpPage extends StatelessWidget {
     });
 
     return WillPopScope(
-      onWillPop: () async {return false;},
+      onWillPop: () async {
+        return false;
+      },
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Color(0xfff58220),
@@ -45,16 +47,18 @@ class KtpPage extends StatelessWidget {
                 style: TextStyle(fontSize: 25),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
                 child: TextFormField(
                   controller: _inputController,
                   validator: (value) {
-                    if (value!.length < 15){
+                    if (value!.length < 15) {
                       return 'Nomor KTP tidak valid';
-                    }else if (value != noKTP) {
+                    } else if (value != noKTP) {
                       return 'Nomor KTP tidak cocok';
                     }
-                    Navigator.pushNamed(context, EmailPage.routes, arguments: ["dada", "dede"]);
+                    Navigator.pushNamed(context, EmailPage.routes,
+                        arguments: noKTP);
                   },
                 ),
               ),
@@ -62,14 +66,17 @@ class KtpPage extends StatelessWidget {
                 valueListenable: _inputController,
                 builder: (context, value, child) {
                   return ElevatedButton(
-                    onPressed: value.text.isNotEmpty ? (){
-                      if (_formKey.currentState!.validate()) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Nomor KTP Valid')),
-                        );
-                        // _inputController.dispose();
-                      }
-                    } : null,
+                    onPressed: value.text.isNotEmpty
+                        ? () {
+                            if (_formKey.currentState!.validate()) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text('Nomor KTP Valid')),
+                              );
+                              // _inputController.dispose();
+                            }
+                          }
+                        : null,
                     child: const Text('Next'),
                   );
                 },

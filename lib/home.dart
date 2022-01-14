@@ -144,14 +144,14 @@ class Beranda extends StatelessWidget {
                   ),
                   items: [1, 2, 3, 4, 5]
                       .map((item) => Container(
-                    margin: EdgeInsets.symmetric(
-                        horizontal: 6, vertical: 15),
-                    child: Center(child: Text(item.toString())),
-                    decoration: BoxDecoration(
-                      color: myColor[item - 1],
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ))
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 6, vertical: 15),
+                            child: Center(child: Text(item.toString())),
+                            decoration: BoxDecoration(
+                              color: myColor[item - 1],
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ))
                       .toList(),
                 ),
               ),
@@ -178,14 +178,14 @@ class Beranda extends StatelessWidget {
                   ),
                   items: [1, 2, 3, 4, 5]
                       .map((item) => Container(
-                    margin: EdgeInsets.symmetric(
-                        horizontal: 6, vertical: 15),
-                    child: Center(child: Text(item.toString())),
-                    decoration: BoxDecoration(
-                      color: myColor[item - 1],
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ))
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 6, vertical: 15),
+                            child: Center(child: Text(item.toString())),
+                            decoration: BoxDecoration(
+                              color: myColor[item - 1],
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ))
                       .toList(),
                 ),
               ),
@@ -205,9 +205,9 @@ class Info extends StatelessWidget {
     return Container(
       child: Center(
           child: Text(
-            'Tab Info',
-            style: new TextStyle(fontSize: 40),
-          )),
+        'Tab Info',
+        style: new TextStyle(fontSize: 40),
+      )),
     );
   }
 }
@@ -220,9 +220,9 @@ class Histori extends StatelessWidget {
     return Container(
       child: Center(
           child: Text(
-            'Tab History',
-            style: new TextStyle(fontSize: 40),
-          )),
+        'Tab History',
+        style: new TextStyle(fontSize: 40),
+      )),
     );
   }
 }
@@ -235,9 +235,9 @@ class Akun extends StatelessWidget {
     return Container(
       child: Center(
           child: Text(
-            'Tab Akun',
-            style: new TextStyle(fontSize: 40),
-          )),
+        'Tab Akun',
+        style: new TextStyle(fontSize: 40),
+      )),
     );
   }
 }

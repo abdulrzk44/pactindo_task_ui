@@ -23,7 +23,8 @@ class _EulaPageState extends State<EulaPage> {
     super.initState();
   }
 
-  Future<EulaModel> loadJsonData() async { /* Jadikan return data dengan model data eula */
+  Future<EulaModel> loadJsonData() async {
+    /* Jadikan return data dengan model data eula */
     var jsonText = await rootBundle.loadString('assets/data/dummy_html.json');
     String eulaData = jsonText;
     EulaModel eula = EulaModel.fromJson(jsonDecode(eulaData));
@@ -37,10 +38,12 @@ class _EulaPageState extends State<EulaPage> {
         title: Text("EULA"),
         centerTitle: true,
       ),
-      body: FutureBuilder( /* Pakai future builder buat get data asynchronous */
+      body: FutureBuilder(
+        /* Pakai future builder buat get data asynchronous */
         future: loadJsonData(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          if (snapshot.hasData) { /* Cek apakah datanya ada atau tidak, kalau ada tampilkan widget webview, kalau tidak tampilkan loading */
+          if (snapshot.hasData) {
+            /* Cek apakah datanya ada atau tidak, kalau ada tampilkan widget webview, kalau tidak tampilkan loading */
             return Container(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -48,7 +51,8 @@ class _EulaPageState extends State<EulaPage> {
                   Container(
                     height: MediaQuery.of(context).size.height * 0.77,
                     child: WebView(
-                      initialUrl: 'data:text/html;base64,${base64Encode(const Utf8Encoder().convert(snapshot.data.eulaHtml))}',
+                      initialUrl:
+                          'data:text/html;base64,${base64Encode(const Utf8Encoder().convert(snapshot.data.eulaHtml))}',
                     ),
                   ),
                   Container(
@@ -60,7 +64,8 @@ class _EulaPageState extends State<EulaPage> {
                       children: [
                         Checkbox(
                             value: isChecked,
-                            onChanged: (bool? value) { /* Set state ketika checkbox ditap/dikasih action */
+                            onChanged: (bool? value) {
+                              /* Set state ketika checkbox ditap/dikasih action */
                               setState(() {
                                 isChecked = value!;
                               });
@@ -75,7 +80,8 @@ class _EulaPageState extends State<EulaPage> {
                               ),
                             ),
                             onPressed: () {
-                              if (isChecked) { /* Kasih validasi kalau checkbox belum diceklis, button gaboleh ada aksi */
+                              if (isChecked) {
+                                /* Kasih validasi kalau checkbox belum diceklis, button gaboleh ada aksi */
                                 Navigator.pushNamed(context, '/ktp');
                                 setState(() {
                                   isChecked = false;

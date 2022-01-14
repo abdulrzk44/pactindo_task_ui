@@ -15,6 +15,14 @@ class PasswordPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final arguments = ModalRoute.of(context)!.settings.arguments as List;
+    String noKtp = arguments[0];
+    String email = arguments[1];
+    String phoneNumber = arguments[2];
+    String otpCode = arguments[3];
+    String username = arguments[4];
+    String password = "";
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xfff58220),
@@ -40,7 +48,15 @@ class PasswordPage extends StatelessWidget {
                   }else if (!validateStructure(value)) {
                     return 'Syarat tidak cocok';
                   }
-                  Navigator.pushNamed(context, '/mpin');
+                  password = value;
+                  Navigator.pushNamed(context, '/mpin', arguments: [
+                    noKtp,
+                    email,
+                    phoneNumber,
+                    otpCode,
+                    username,
+                    password
+                  ]);
                 },
               ),
             ),

@@ -45,8 +45,11 @@ class _OtpPageState extends State<OtpPage> {
   @override
   Widget build(BuildContext context) {
     final arguments = ModalRoute.of(context)!.settings.arguments as List;
-    String phoneNumber = arguments[0];
-    String otpCode = arguments[1];
+    String noKtp = arguments[0];
+    String email = arguments[1];
+    String phoneNumber = arguments[2];
+    String otpCode = arguments[3];
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xfff58220),
@@ -211,7 +214,8 @@ class _OtpPageState extends State<OtpPage> {
                         );
                       } else {
                         snackBar("Verifikasi berhasil");
-                        Navigator.pushNamed(context, '/username');
+                        Navigator.pushNamed(context, '/username', arguments: [
+                          noKtp, email, phoneNumber, otpCode]);
                       }
                     },
                     child: Center(

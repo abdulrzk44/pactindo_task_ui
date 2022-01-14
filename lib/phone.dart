@@ -9,8 +9,12 @@ class PhoneNumberPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final arguments = ModalRoute.of(context)!.settings.arguments as List;
+    String noKtp = arguments[0];
+    String email = arguments[1];
     String? phoneNumber;
     String otpCode = "";
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xfff58220),
@@ -36,7 +40,8 @@ class PhoneNumberPage extends StatelessWidget {
                     return 'Nomor telepon tidak valid';
                   }
                   otpCode = phoneNumber!.substring(phoneNumber!.length - 6);
-                  Navigator.pushNamed(context, '/otp', arguments: [phoneNumber, otpCode]);
+                  Navigator.pushNamed(context, '/otp', arguments: [
+                    noKtp, email, phoneNumber, otpCode]);
                 },
               ),
             ),

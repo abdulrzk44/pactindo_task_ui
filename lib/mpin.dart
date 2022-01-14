@@ -16,7 +16,6 @@ class _MpinPage extends State<MpinPage> {
   StreamController<ErrorAnimationType>? errorController;
 
   bool emptyCells = false;
-  bool validCode = false;
   String currentText = "";
   final formKey = GlobalKey<FormState>();
 
@@ -44,10 +43,19 @@ class _MpinPage extends State<MpinPage> {
 
   @override
   Widget build(BuildContext context) {
+    final arguments = ModalRoute.of(context)!.settings.arguments as List;
+    String noKtp = arguments[0];
+    String email = arguments[1];
+    String phoneNumber = arguments[2];
+    String otpCode = arguments[3];
+    String username = arguments[4];
+    String password = arguments[5];
+    String mpin = "";
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xfff58220),
-        title: Text("MPIN"),
+        title: Text("ATUR MPIN"),
         centerTitle: true,
       ),
       body: GestureDetector(
@@ -177,15 +185,19 @@ class _MpinPage extends State<MpinPage> {
                         errorController!.add(ErrorAnimationType
                             .shake); // Triggering error shake animation
                         setState(() => emptyCells = true);
-                      } else if (currentText != "aaa") {
-                        setState(
-                              () {
-                            snackBar("MPIN tidak valid");
-                          },
-                        );
-                      } else {
-                        snackBar("Verifikasi berhasil");
-                        Navigator.pushNamed(context, '/confirm_mpin');
+                      }else {
+                        mpin = currentText;
+                        // snackBar("Verifikasi berhasil");
+                        Navigator.pushNamed(context, '/confirm_mpin',
+                            arguments: [
+                              noKtp,
+                              email,
+                              phoneNumber,
+                              otpCode,
+                              username,
+                              password,
+                              mpin
+                            ]);
                       }
                     },
                     child: Center(

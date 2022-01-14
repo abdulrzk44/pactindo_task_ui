@@ -15,6 +15,8 @@ class _ConfirmMpinPageState extends State<ConfirmMpinPage> {
   TextEditingController textEditingController = TextEditingController();
   StreamController<ErrorAnimationType>? errorController;
 
+  String mpin = "";
+
   bool emptyCells = false;
   bool validCode = false;
   String currentText = "";
@@ -44,6 +46,15 @@ class _ConfirmMpinPageState extends State<ConfirmMpinPage> {
 
   @override
   Widget build(BuildContext context) {
+    final arguments = ModalRoute.of(context)!.settings.arguments as List;
+    String noKtp = arguments[0];
+    String email = arguments[1];
+    String phoneNumber = arguments[2];
+    String otpCode = arguments[3];
+    String username = arguments[4];
+    String password = arguments[5];
+    String mpin = arguments[6];
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xfff58220),
@@ -68,7 +79,7 @@ class _ConfirmMpinPageState extends State<ConfirmMpinPage> {
               // ),
               Padding(
                 padding:
-                const EdgeInsets.symmetric(horizontal: 30.0, vertical: 8),
+                    const EdgeInsets.symmetric(horizontal: 30.0, vertical: 8),
                 child: RichText(
                   text: TextSpan(
                       text: "Masukan MPIN",
@@ -166,7 +177,7 @@ class _ConfirmMpinPageState extends State<ConfirmMpinPage> {
               ),
               Container(
                 margin:
-                const EdgeInsets.symmetric(vertical: 16.0, horizontal: 30),
+                    const EdgeInsets.symmetric(vertical: 16.0, horizontal: 30),
                 child: ButtonTheme(
                   height: 50,
                   child: TextButton(
@@ -177,25 +188,33 @@ class _ConfirmMpinPageState extends State<ConfirmMpinPage> {
                         errorController!.add(ErrorAnimationType
                             .shake); // Triggering error shake animation
                         setState(() => emptyCells = true);
-                      } else if (currentText != "aaa") {
+                      } else if (currentText != mpin) {
                         setState(
-                              () {
+                          () {
                             snackBar("MPIN tidak valid");
                           },
                         );
                       } else {
                         snackBar("Verifikasi berhasil");
-                        Navigator.pushNamed(context, '/confirm_mpin');
+                        Navigator.pushNamed(context, '/resi', arguments: [
+                          noKtp,
+                          email,
+                          phoneNumber,
+                          otpCode,
+                          username,
+                          password,
+                          mpin
+                        ]);
                       }
                     },
                     child: Center(
                         child: Text(
-                          "Konfirmasi".toUpperCase(),
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
-                        )),
+                      "Konfirmasi".toUpperCase(),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
+                    )),
                   ),
                 ),
                 decoration: BoxDecoration(
