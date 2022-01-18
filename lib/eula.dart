@@ -33,6 +33,7 @@ class _EulaPageState extends State<EulaPage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Color(0xfff58220),
         title: Text("EULA"),
@@ -82,7 +83,7 @@ class _EulaPageState extends State<EulaPage> {
                             onPressed: () {
                               if (isChecked) {
                                 /* Kasih validasi kalau checkbox belum diceklis, button gaboleh ada aksi */
-                                Navigator.pushNamed(context, '/ktp');
+                                Navigator.pushNamed(context, '/login');
                                 setState(() {
                                   isChecked = false;
                                 });
