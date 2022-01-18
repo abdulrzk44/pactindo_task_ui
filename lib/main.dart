@@ -9,6 +9,7 @@ import 'email.dart';
 import 'eula.dart';
 import 'home.dart';
 import 'ktp.dart';
+import 'login.dart';
 import 'mpin.dart';
 import 'otp.dart';
 
@@ -57,6 +58,7 @@ class MyHomePage extends StatelessWidget {
             '/mpin': (ctx) => MpinPage(),
             '/confirm_mpin': (ctx) => ConfirmMpinPage(),
             '/resi': (ctx) => ResiPage(),
+            '/login': (ctx) => LoginPage(),
           },
         );
       },

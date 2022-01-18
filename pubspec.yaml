@@ -32,6 +32,9 @@ dependencies:
   webview_flutter: ^2.0.13
   sqflite: ^2.0.1
   pin_code_fields: ^7.3.0
+  equatable: ^2.0.3
+  flutter_biometrics: ^0.3.0
+  local_auth: ^1.0.0-nullsafety.3
 
 dev_dependencies:
   flutter_test:
@@ -50,8 +53,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-   - assets/images/
-   - assets/data/
+    - assets/images/
+    - assets/data/
 
   # An images asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
