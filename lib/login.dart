@@ -26,6 +26,8 @@ class _LoginPageState extends State<LoginPage> {
 
     setState(() {
       _publicKey = publicKey;
+
+      Navigator.pushNamed(context, '/home', arguments: _username);
     });
 
     if (!mounted) return;
@@ -33,15 +35,22 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> sign() async {
     var biometrics = FlutterBiometrics();
-    String signature = await biometrics.sign(
-        payload: _payload,
-        reason: 'Please authenticate to sign specified payload');
+    bool _canCheckBiometrics = await biometrics.authAvailable;
+    if (_canCheckBiometrics == false) {
+      Navigator.of(context).pop();
+    } else {
+      await biometrics.createKeys(
+          reason: 'Please authenticate to create public/private key pair');
+      String signature = await biometrics.sign(
+          payload: _payload,
+          reason: 'Please authenticate to sign specified payload');
 
-    setState(() {
-      _signature = signature;
-      Navigator.pushNamed(context, '/home',
-          arguments: _username);
-    });
+      setState(() {
+        _signature = signature;
+
+        Navigator.pushNamed(context, '/home', arguments: _username);
+      });
+    }
 
     if (!mounted) return;
   }
@@ -49,7 +58,8 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _inputController = TextEditingController();
   final TextEditingController _inputController2 = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  final _username = '';
+  final _username = 'abdul';
+  final _password = '12345678';
 
   @override
   Widget build(BuildContext context) {
@@ -96,10 +106,8 @@ class _LoginPageState extends State<LoginPage> {
                             if (value!.length < 5) {
                               return 'Username tidak valid';
                             } else if (value != _username) {
-                              return 'Username tidak valid';
+                              return 'Username tidak terdaftar';
                             }
-                            Navigator.pushNamed(context, '/home',
-                                arguments: _username);
                           },
                         ),
                         SizedBox(
@@ -126,11 +134,9 @@ class _LoginPageState extends State<LoginPage> {
                           validator: (value) {
                             if (value!.length < 5) {
                               return 'Password tidak valid';
-                            } else if (value != _username) {
-                              return 'Password tidak valid';
+                            } else if (value != _password) {
+                              return 'Password salah';
                             }
-                            Navigator.pushNamed(context, '/home',
-                                arguments: _username);
                           },
                         ),
                       ],
@@ -142,34 +148,30 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(20.0),
-                  child: ValueListenableBuilder<TextEditingValue>(
-                    valueListenable: _inputController,
-                    builder: (context, value, child) {
-                      return ElevatedButton(
-                        child: Text(
-                          'Masuk',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.orange,
-                          minimumSize: Size.fromHeight(50),
-                        ),
-                        onPressed: value.text.isNotEmpty
-                            ? () {
-                                if (_formKey.currentState!.validate()) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content: Text('Nomor KTP Valid')),
-                                  );
-                                  // _inputController.dispose();
-                                }
-                              }
-                            : null,
-                      );
-                    },
+                  child: ElevatedButton(
+                    child: Text(
+                      'Masuk',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.orange,
+                      minimumSize: Size.fromHeight(50),
+                    ),
+                    onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content:
+                                        Text('Login Sukses')),
+                              );
+                              Navigator.pushNamed(context, '/home',
+                                  arguments: _username);
+                              // _inputController.dispose();
+                            }
+                          }
                   ),
                 ),
                 SizedBox(
@@ -183,12 +185,15 @@ class _LoginPageState extends State<LoginPage> {
                   height: 40,
                 ),
                 ElevatedButton(
-                  onPressed: sign,
+                  onPressed: createKeys,
                   style: ElevatedButton.styleFrom(
                     shape: CircleBorder(),
                     primary: Colors.orange, // <-- Button color
                     onPrimary: Colors.red,
-                  ), child: SizedBox(height: 50,),
+                  ),
+                  child: SizedBox(
+                    height: 50,
+                  ),
                 ),
               ],
             ),
