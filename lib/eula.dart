@@ -83,7 +83,7 @@ class _EulaPageState extends State<EulaPage> {
                             onPressed: () {
                               if (isChecked) {
                                 /* Kasih validasi kalau checkbox belum diceklis, button gaboleh ada aksi */
-                                Navigator.pushNamed(context, '/login');
+                                Navigator.pushNamed(context, '/ktp');
                                 setState(() {
                                   isChecked = false;
                                 });

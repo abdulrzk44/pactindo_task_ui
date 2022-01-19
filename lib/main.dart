@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pactindo_task_ui/confirm_mpin.dart';
+import 'package:pactindo_task_ui/database/db_user.dart';
 import 'package:pactindo_task_ui/password.dart';
 import 'package:pactindo_task_ui/phone.dart';
 import 'package:pactindo_task_ui/resi.dart';
+import 'package:pactindo_task_ui/splash.dart';
 import 'package:pactindo_task_ui/username.dart';
 
 import 'email.dart';
@@ -21,14 +23,25 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
+    return FutureBuilder(
+      future: Init.instance.initialize(),
+      builder: (context, AsyncSnapshot snapshot) {
+        // Show splash screen while waiting for app resources to load:
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const MaterialApp(home: Splash());
+        } else {
+          // Loading is done, return the app:
+          return MaterialApp(
+            title: 'Flutter Demo',
+            theme: ThemeData(
+              // This is the theme of your application.
 
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+              primarySwatch: Colors.blue,
+            ),
+            home: MyHomePage(title: 'Flutter Demo Home Page'),
+          );
+        }
+      },
     );
   }
 }
@@ -64,5 +77,19 @@ class MyHomePage extends StatelessWidget {
       },
       valueListenable: ValueNotifier(1),
     );
+  }
+}
+
+class Init {
+  Init._();
+  static final instance = Init._();
+
+  //init Database
+
+  Future initialize() async {
+    // This is where you can initialize the resources needed by your app while
+    // the splash screen is displayed.  Remove the following example because
+    // delaying the user experience is a bad design practice!
+    await Future.delayed(const Duration(seconds: 2));
   }
 }
