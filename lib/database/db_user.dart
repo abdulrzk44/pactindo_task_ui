@@ -41,7 +41,7 @@ class CrudUser {
 
   update(Map<String, Object> data) {
     openDB().then((db) {
-      db.update(UserQuery.TABLE_NAME, data, conflictAlgorithm: ConflictAlgorithm.replace);
+      db.update(UserQuery.TABLE_NAME, data, where: "id = 1", conflictAlgorithm: ConflictAlgorithm.replace);
     }).catchError((err) {
       print("error $err");
     });

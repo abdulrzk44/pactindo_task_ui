@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_biometrics/flutter_biometrics.dart';
+import 'package:pactindo_task_ui/database/db_user.dart';
+
+import 'model/user.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -8,10 +11,25 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final CrudUser _crudUser = CrudUser();
+
   bool passwordVisible = false;
   String _publicKey = 'Not retrieved/Not set';
   String _signature = 'Unknown';
   String _payload = 'Zmx1dHRlcl9iaW9tZXRyaWNz';
+
+
+  @override
+  void initState() {
+    super.initState();
+    _crudUser.openDB();
+    _crudUser.getData().then((value) {
+      value.forEach((element) {
+        User user = User.fromJson(element);
+        print(user.toJson());
+      });
+    });
+  }
 
   void togglePassword() {
     setState(() {
