@@ -28,7 +28,7 @@ class EmailPage extends StatelessWidget {
             Text('Email', style: TextStyle(fontSize: 25),),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-              child: TextFormField(),
+              child: TextFormField(controller: _inputController,),
             ),
             ValueListenableBuilder<TextEditingValue>(
               valueListenable: _inputController,

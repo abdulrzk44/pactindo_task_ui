@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pactindo_task_ui/confirm_mpin.dart';
-import 'package:pactindo_task_ui/database/db_user.dart';
 import 'package:pactindo_task_ui/password.dart';
 import 'package:pactindo_task_ui/phone.dart';
 import 'package:pactindo_task_ui/resi.dart';
@@ -90,6 +89,6 @@ class Init {
     // This is where you can initialize the resources needed by your app while
     // the splash screen is displayed.  Remove the following example because
     // delaying the user experience is a bad design practice!
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 5));
   }
 }
