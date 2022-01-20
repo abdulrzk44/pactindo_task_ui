@@ -5,7 +5,7 @@ class PasswordPage extends StatelessWidget {
   PasswordPage({Key? key}) : super(key: key);
 
   final TextEditingController _inputController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   bool validateStructure(String value){
     String  pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~])';

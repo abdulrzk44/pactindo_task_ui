@@ -31,6 +31,10 @@ class CrudUser {
         }, version: 1);
   }
 
+  Future<bool> checkDB(){
+    return sqlite.databaseExists('user_data.db');
+  }
+
   insert(Map<String, Object> data) {
     openDB().then((db) {
       db.insert(UserQuery.TABLE_NAME, data, conflictAlgorithm: ConflictAlgorithm.replace);

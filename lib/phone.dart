@@ -5,7 +5,7 @@ class PhoneNumberPage extends StatelessWidget {
   PhoneNumberPage({Key? key}) : super(key: key);
 
   final TextEditingController _inputController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +39,6 @@ class PhoneNumberPage extends StatelessWidget {
                   if (value!.length < 10 || value.length > 15) {
                     return 'Nomor telepon tidak valid';
                   }
-                  otpCode = phoneNumber!.substring(phoneNumber!.length - 6);
-                  Navigator.pushNamed(context, '/otp', arguments: [
-                    noKtp, email, phoneNumber, otpCode]);
                 },
               ),
             ),
@@ -55,6 +52,9 @@ class PhoneNumberPage extends StatelessWidget {
                       //   const SnackBar(content: Text('ok')),
                       // );
                       // _inputController.dispose();
+                      otpCode = phoneNumber!.substring(phoneNumber!.length - 6);
+                      Navigator.pushNamed(context, '/otp', arguments: [
+                        noKtp, email, phoneNumber, otpCode]);
                     }
                   } : null,
                   child: const Text('Next'),

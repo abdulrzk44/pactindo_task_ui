@@ -6,7 +6,7 @@ class EmailPage extends StatelessWidget {
   EmailPage({Key? key}) : super(key: key);
 
   final TextEditingController _inputController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_biometrics/flutter_biometrics.dart';
 import 'package:pactindo_task_ui/database/db_user.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'model/user.dart';
 
@@ -12,12 +13,12 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final CrudUser _crudUser = CrudUser();
+  late final User user; //untuk get data dari DB
 
   bool passwordVisible = false;
   String _publicKey = 'Not retrieved/Not set';
   String _signature = 'Unknown';
   String _payload = 'Zmx1dHRlcl9iaW9tZXRyaWNz';
-
 
   @override
   void initState() {
@@ -25,10 +26,20 @@ class _LoginPageState extends State<LoginPage> {
     _crudUser.openDB();
     _crudUser.getData().then((value) {
       value.forEach((element) {
-        User user = User.fromJson(element);
+        user = User.fromJson(element);
         print(user.toJson());
       });
     });
+  }
+
+  Future<String> getPrefUsername() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.getString("username") ?? "";
+  }
+
+  Future<String> getPrefPassword() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.getString("password") ?? "";
   }
 
   void togglePassword() {
@@ -45,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
     setState(() {
       _publicKey = publicKey;
 
-      Navigator.pushNamed(context, '/home', arguments: _username);
+      Navigator.pushNamed(context, '/home');
     });
 
     if (!mounted) return;
@@ -66,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         _signature = signature;
 
-        Navigator.pushNamed(context, '/home', arguments: _username);
+        Navigator.pushNamed(context, '/home');
       });
     }
 
@@ -75,12 +86,15 @@ class _LoginPageState extends State<LoginPage> {
 
   final TextEditingController _inputController = TextEditingController();
   final TextEditingController _inputController2 = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
-  final _username = 'abdul';
-  final _password = '12345678';
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    late String username;
+    getPrefUsername().then((value) => username = value);
+    late String password;
+    getPrefPassword().then((value) => password = value);
+
     return WillPopScope(
       onWillPop: () async {
         return false;
@@ -123,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                           validator: (value) {
                             if (value!.length < 5) {
                               return 'Username tidak valid';
-                            } else if (value != _username) {
+                            } else if (value != username) {
                               return 'Username tidak terdaftar';
                             }
                           },
@@ -152,7 +166,7 @@ class _LoginPageState extends State<LoginPage> {
                           validator: (value) {
                             if (value!.length < 5) {
                               return 'Password tidak valid';
-                            } else if (value != _password) {
+                            } else if (value != password) {
                               return 'Password salah';
                             }
                           },
@@ -167,30 +181,26 @@ class _LoginPageState extends State<LoginPage> {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: ElevatedButton(
-                    child: Text(
-                      'Masuk',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
+                      child: Text(
+                        'Masuk',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.orange,
-                      minimumSize: Size.fromHeight(50),
-                    ),
-                    onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content:
-                                        Text('Login Sukses')),
-                              );
-                              Navigator.pushNamed(context, '/home',
-                                  arguments: _username);
-                              // _inputController.dispose();
-                            }
-                          }
-                  ),
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.orange,
+                        minimumSize: Size.fromHeight(50),
+                      ),
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Login Sukses')),
+                          );
+                          Navigator.pushNamed(context, '/home');
+                          // _inputController.dispose();
+                        }
+                      }),
                 ),
                 SizedBox(
                   height: 30,

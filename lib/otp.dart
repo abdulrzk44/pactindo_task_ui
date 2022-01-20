@@ -18,7 +18,7 @@ class _OtpPageState extends State<OtpPage> {
   bool emptyCells = false;
   bool validCode = false;
   String currentText = "";
-  final formKey = GlobalKey<FormState>();
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   snackBar(String? message) {
     return ScaffoldMessenger.of(context).showSnackBar(
@@ -94,7 +94,7 @@ class _OtpPageState extends State<OtpPage> {
                 height: 20,
               ),
               Form(
-                key: formKey,
+                key: _formKey,
                 child: Padding(
                     padding: const EdgeInsets.symmetric(
                         vertical: 8.0, horizontal: 30),
@@ -200,7 +200,7 @@ class _OtpPageState extends State<OtpPage> {
                   height: 50,
                   child: TextButton(
                     onPressed: () {
-                      formKey.currentState!.validate();
+                      _formKey.currentState!.validate();
                       // conditions for validating
                       if (currentText.length != 6) {
                         errorController!.add(ErrorAnimationType

@@ -10,8 +10,8 @@ import 'email.dart';
 class KtpPage extends StatelessWidget {
   KtpPage({Key? key}) : super(key: key);
 
-  final TextEditingController _inputController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+  TextEditingController _inputController = TextEditingController();
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   Future<KtpModel> loadJsonData() async {
     var jsonText = await rootBundle.loadString('assets/data/dummy_ktp.json');
@@ -37,52 +37,52 @@ class KtpPage extends StatelessWidget {
           centerTitle: true,
           leading: Container(),
         ),
-        body: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'Masukan Nomor KTP',
-                style: TextStyle(fontSize: 25),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'Masukan Nomor KTP',
+              style: TextStyle(fontSize: 25),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+              child: Form(
+                key: _formKey,
                 child: TextFormField(
                   controller: _inputController,
+                  enabled: true,
                   validator: (value) {
                     if (value!.length < 15) {
                       return 'Nomor KTP tidak valid';
                     } else if (value != noKTP) {
                       return 'Nomor KTP tidak cocok';
                     }
-                    Navigator.pushNamed(context, EmailPage.routes,
-                        arguments: noKTP);
+                    return null;
                   },
                 ),
               ),
-              ValueListenableBuilder<TextEditingValue>(
-                valueListenable: _inputController,
-                builder: (context, value, child) {
-                  return ElevatedButton(
-                    onPressed: value.text.isNotEmpty
-                        ? () {
-                            if (_formKey.currentState!.validate()) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('Nomor KTP Valid')),
-                              );
-                              // _inputController.dispose();
-                            }
+            ),
+            ValueListenableBuilder<TextEditingValue>(
+              valueListenable: _inputController,
+              builder: (context, value, child) {
+                return ElevatedButton(
+                  onPressed: value.text.isNotEmpty
+                      ? () {
+                          if (_formKey.currentState!.validate()) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Nomor KTP Valid')),
+                            );
+                            Navigator.pushNamed(context, EmailPage.routes,
+                                arguments: noKTP);
+                            // _inputController.dispose();
                           }
-                        : null,
-                    child: const Text('Next'),
-                  );
-                },
-              ),
-            ],
-          ),
+                        }
+                      : null,
+                  child: const Text('Next'),
+                );
+              },
+            ),
+          ],
         ),
       ),
     );
