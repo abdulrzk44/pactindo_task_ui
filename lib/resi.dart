@@ -61,8 +61,28 @@ class ResiPage extends StatelessWidget {
         centerTitle: true,
       ),
       body: ListView.builder(
-        itemCount: fieldData.length,
+        itemCount: fieldData.length + 1,
         itemBuilder: (context, index) {
+          if (index == fieldData.length) {
+            return ElevatedButton(
+              onPressed: () {
+                _crudUser.insert({
+                  "no_ktp": noKtp,
+                  "email": email,
+                  "no_telepon": phoneNumber,
+                  "kode_otp": otpCode,
+                  "username": username,
+                  "password": password,
+                  "mpin": mpin,
+                });
+                savePref();
+                getPrefUsername().then((value) => print('USERNAME : $value'));
+
+                Navigator.pushNamed(context, '/login');
+              },
+              child: Text('Selanjutnya'),
+            );
+          }
           return Row(
             children: <Widget>[
               Flexible(
@@ -84,24 +104,6 @@ class ResiPage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 15),
-              ElevatedButton(
-                onPressed: () {
-                  _crudUser.insert({
-                    "no_ktp": noKtp,
-                    "email": email,
-                    "no_telepon": phoneNumber,
-                    "kode_otp": otpCode,
-                    "username": username,
-                    "password": password,
-                    "mpin": mpin,
-                  });
-                  savePref();
-                  getPrefUsername().then((value) => print('USERNAME : $value'));
-
-                  Navigator.pushNamed(context, '/login');
-                },
-                child: Text('Selanjutnya'),
-              ),
             ],
           );
         },
