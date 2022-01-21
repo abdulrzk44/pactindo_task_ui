@@ -1,19 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pactindo_task_ui/database/db_user.dart';
-import 'package:pactindo_task_ui/password.dart';
-import 'package:pactindo_task_ui/phone.dart';
+import 'package:pactindo_task_ui/feature/confirm_mpin.dart';
+import 'package:pactindo_task_ui/feature/email.dart';
+import 'package:pactindo_task_ui/feature/eula.dart';
+import 'package:pactindo_task_ui/feature/home.dart';
+import 'package:pactindo_task_ui/feature/ktp.dart';
+import 'package:pactindo_task_ui/feature/login.dart';
+import 'package:pactindo_task_ui/feature/mpin.dart';
+import 'package:pactindo_task_ui/feature/otp.dart';
+import 'package:pactindo_task_ui/feature/password.dart';
+import 'package:pactindo_task_ui/feature/phone.dart';
+import 'package:pactindo_task_ui/feature/username.dart';
 import 'package:pactindo_task_ui/resi.dart';
-import 'package:pactindo_task_ui/username.dart';
 
-import 'confirm_mpin.dart';
-import 'email.dart';
-import 'eula.dart';
-import 'home.dart';
-import 'ktp.dart';
-import 'login.dart';
-import 'mpin.dart';
-import 'otp.dart';
+import 'data/database/db_user.dart';
 
 class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);

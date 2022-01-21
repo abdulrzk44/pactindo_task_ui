@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import 'model/eula_model.dart';
+import '/model/eula_model.dart';
 
 class EulaPage extends StatefulWidget {
   // final AssetBundle rootBundle = _initRootBundle();

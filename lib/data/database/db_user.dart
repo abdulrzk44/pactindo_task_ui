@@ -37,9 +37,17 @@ class CrudUser {
 
   insert(Map<String, Object> data) {
     openDB().then((db) {
-      db.insert(UserQuery.TABLE_NAME, data, conflictAlgorithm: ConflictAlgorithm.replace);
-    }).catchError((err) {
-      print("error $err");
+      Future <int> insert(Map<String, Object> data) async{
+        int result = 1;
+        await openDB().then((db) {
+          db.insert(UserQuery.TABLE_NAME, data, conflictAlgorithm: ConflictAlgorithm.replace);
+          result = 0;
+        }).catchError((err) {
+          result = 1;
+          print("error $err");
+        });
+        return result;
+      }
     });
   }
 
@@ -57,3 +65,4 @@ class CrudUser {
     return result.toList();
   }
 }
+

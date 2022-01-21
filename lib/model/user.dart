@@ -1,20 +1,20 @@
 class User {
   User({
-    required this.noKtp,
-    required this.email,
-    required this.noTelepon,
-    required this.kodeOtp,
-    required this.username,
-    required this.password,
-    required this.mpin,
+    this.noKtp,
+    this.email,
+    this.noTelepon,
+    this.kodeOtp,
+    this.username,
+    this.password,
+    this.mpin,
   });
-  late final String noKtp;
-  late final String email;
-  late final String noTelepon;
-  late final String kodeOtp;
-  late final String username;
-  late final String password;
-  late final String mpin;
+  late final String? noKtp;
+  late final String? email;
+  late final String? noTelepon;
+  late final String? kodeOtp;
+  late final String? username;
+  late final String? password;
+  late final String? mpin;
 
   User.fromJson(Map<String, dynamic> json){
     noKtp = json['no_ktp'];
