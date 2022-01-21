@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class EmailPage extends StatelessWidget {
   static const String routes = "/email";
+
   EmailPage({Key? key}) : super(key: key);
 
   final TextEditingController _inputController = TextEditingController();
@@ -25,10 +26,16 @@ class EmailPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('Email', style: TextStyle(fontSize: 25),),
+            Text(
+              'Email',
+              style: TextStyle(fontSize: 25),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-              child: TextFormField(controller: _inputController,),
+              child: TextFormField(
+                controller: _inputController,
+                keyboardType: TextInputType.emailAddress,
+              ),
             ),
             ValueListenableBuilder<TextEditingValue>(
               valueListenable: _inputController,
@@ -36,8 +43,8 @@ class EmailPage extends StatelessWidget {
                 return ElevatedButton(
                   onPressed: () {
                     email = value.text;
-                    Navigator.pushNamed(context, '/phone', arguments: [
-                      noKtp, email]);
+                    Navigator.pushNamed(context, '/phone',
+                        arguments: [noKtp, email]);
                   },
                   child: const Text('Next'),
                 );

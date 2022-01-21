@@ -50,6 +50,8 @@ class KtpPage extends StatelessWidget {
                 key: _formKey,
                 child: TextFormField(
                   controller: _inputController,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   enabled: true,
                   validator: (value) {
                     if (value!.length < 15) {

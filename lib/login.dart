@@ -13,7 +13,6 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final CrudUser _crudUser = CrudUser();
-  late final User user; //untuk get data dari DB
 
   bool passwordVisible = false;
   String _publicKey = 'Not retrieved/Not set';
@@ -26,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
     _crudUser.openDB();
     _crudUser.getData().then((value) {
       value.forEach((element) {
-        user = User.fromJson(element);
+        User user = User.fromJson(element);
         print(user.toJson());
       });
     });
@@ -91,9 +90,13 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     late String username;
-    getPrefUsername().then((value) => username = value);
+    getPrefUsername().then((value) {
+      username = value;
+    });
     late String password;
-    getPrefPassword().then((value) => password = value);
+    getPrefPassword().then((value) {
+      password = value;
+    });
 
     return WillPopScope(
       onWillPop: () async {
@@ -138,6 +141,7 @@ class _LoginPageState extends State<LoginPage> {
                             if (value!.length < 5) {
                               return 'Username tidak valid';
                             } else if (value != username) {
+                              print('USERNAMEEE : $username');
                               return 'Username tidak terdaftar';
                             }
                           },

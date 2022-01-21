@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class ConfirmMpinPage extends StatefulWidget {
@@ -117,7 +118,7 @@ class _ConfirmMpinPageState extends State<ConfirmMpinPage> {
                         // }
                       },
                       pinTheme: PinTheme(
-                        shape: PinCodeFieldShape.box,
+                        shape: PinCodeFieldShape.circle,
                         borderRadius: BorderRadius.circular(5),
                         fieldHeight: 50,
                         fieldWidth: 40,
@@ -128,6 +129,7 @@ class _ConfirmMpinPageState extends State<ConfirmMpinPage> {
                       enableActiveFill: true,
                       errorAnimationController: errorController,
                       controller: textEditingController,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       keyboardType: TextInputType.number,
                       boxShadows: [
                         BoxShadow(

@@ -42,6 +42,7 @@ class PasswordPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
               child: TextFormField(
                 controller: _inputController,
+                keyboardType: TextInputType.visiblePassword,
                 validator: (value) {
                   if (value!.length < 8){
                     return 'Minimum 8 karakter';

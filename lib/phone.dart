@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class PhoneNumberPage extends StatelessWidget {
   PhoneNumberPage({Key? key}) : super(key: key);
@@ -34,6 +35,8 @@ class PhoneNumberPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
               child: TextFormField(
                 controller: _inputController,
+                keyboardType: TextInputType.phone,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 validator: (value) {
                   phoneNumber = value;
                   if (value!.length < 10 || value.length > 15) {

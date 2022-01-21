@@ -8,18 +8,22 @@ class ResiPage extends StatelessWidget {
 
   final CrudUser _crudUser = new CrudUser();
 
-  late String noKtp;
-  late String email;
-  late String phoneNumber;
-  late String otpCode;
-  late String username;
-  late String password;
-  late String mpin;
+  late final String noKtp;
+  late final String email;
+  late final String phoneNumber;
+  late final String otpCode;
+  late final String username;
+  late final String password;
+  late final String mpin;
 
   void savePref() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setString("username", username);
     preferences.setString("password", password);
+    String? user = preferences.getString("username");
+    String? pwd = preferences.getString("password");
+    print("UUUUUUUUSSSSSEEERRRR : $user");
+    print("PPPPWWWWWDDDDDDDDDDD : $pwd");
   }
 
   final List<String> fieldData = [
@@ -76,7 +80,6 @@ class ResiPage extends StatelessWidget {
                   "mpin": mpin,
                 });
                 savePref();
-                getPrefUsername().then((value) => print('USERNAME : $value'));
 
                 Navigator.pushNamed(context, '/login');
               },

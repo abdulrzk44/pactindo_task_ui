@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OtpPage extends StatefulWidget {
@@ -132,6 +133,7 @@ class _OtpPageState extends State<OtpPage> {
                       errorAnimationController: errorController,
                       controller: textEditingController,
                       keyboardType: TextInputType.number,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       boxShadows: [
                         BoxShadow(
                           offset: Offset(0, 1),

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class MpinPage extends StatefulWidget {
@@ -114,7 +115,7 @@ class _MpinPage extends State<MpinPage> {
                         // }
                       },
                       pinTheme: PinTheme(
-                        shape: PinCodeFieldShape.box,
+                        shape: PinCodeFieldShape.circle,
                         borderRadius: BorderRadius.circular(5),
                         fieldHeight: 50,
                         fieldWidth: 40,
@@ -126,6 +127,7 @@ class _MpinPage extends State<MpinPage> {
                       errorAnimationController: errorController,
                       controller: textEditingController,
                       keyboardType: TextInputType.number,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       boxShadows: [
                         BoxShadow(
                           offset: Offset(0, 1),
