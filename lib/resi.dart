@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pactindo_task_ui/database/db_user.dart';
+import 'package:pactindo_task_ui/data/database/db_user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ResiPage extends StatelessWidget {

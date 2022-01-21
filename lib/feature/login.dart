@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_biometrics/flutter_biometrics.dart';
-import 'package:pactindo_task_ui/database/db_user.dart';
+import 'package:pactindo_task_ui/data/database/db_user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:pactindo_task_ui/data/database/db_user.dart';
 
-import 'model/user.dart';
+import '/model/user.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -19,13 +20,21 @@ class _LoginPageState extends State<LoginPage> {
   String _signature = 'Unknown';
   String _payload = 'Zmx1dHRlcl9iaW9tZXRyaWNz';
 
+  final TextEditingController _inputController = TextEditingController();
+  final TextEditingController _inputController2 = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  String _username = 'abdul';
+  String _password = '12345678';
+
+
   @override
   void initState() {
     super.initState();
-    _crudUser.openDB();
     _crudUser.getData().then((value) {
       value.forEach((element) {
         User user = User.fromJson(element);
+        _username = user.username!;
+        _password = user.password!;
         print(user.toJson());
       });
     });
@@ -82,10 +91,6 @@ class _LoginPageState extends State<LoginPage> {
 
     if (!mounted) return;
   }
-
-  final TextEditingController _inputController = TextEditingController();
-  final TextEditingController _inputController2 = TextEditingController();
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -144,6 +149,7 @@ class _LoginPageState extends State<LoginPage> {
                               print('USERNAMEEE : $username');
                               return 'Username tidak terdaftar';
                             }
+                            return null;
                           },
                         ),
                         SizedBox(
