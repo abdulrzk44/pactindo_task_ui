@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:pactindo_task_ui/splash.dart';
 import 'package:pactindo_task_ui/feature/confirm_mpin.dart';
 import 'package:pactindo_task_ui/feature/splash_screen/splash.dart';
 import 'package:pactindo_task_ui/feature/password.dart';
 import 'package:pactindo_task_ui/feature/phone.dart';
 import 'package:pactindo_task_ui/feature/receipt_registration/resi.dart';
-import 'package:pactindo_task_ui/feature/splash_screen/splash.dart';
 import 'package:pactindo_task_ui/feature/username.dart';
 
 import 'feature/email.dart';
 import 'feature/eula.dart';
 import 'feature/home.dart';
 import 'feature/ktp.dart';
-import 'feature/login.dart';
+import 'feature/login/login.dart';
 import 'feature/mpin.dart';
 import 'feature/otp.dart';
 

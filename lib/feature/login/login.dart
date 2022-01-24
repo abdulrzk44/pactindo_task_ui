@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_biometrics/flutter_biometrics.dart';
 import 'package:pactindo_task_ui/data/database/db_user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:pactindo_task_ui/data/database/db_user.dart';
 
 import '/model/user.dart';
 
@@ -25,11 +24,16 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   String _username = 'abdul';
   String _password = '12345678';
-
+  bool isDbExist = true;
+  bool isDbNotExist = false;
 
   @override
   void initState() {
     super.initState();
+    _crudUser.checkDB().then((value) {
+      isDbExist = value;
+      isDbNotExist = value;
+    });
     _crudUser.getData().then((value) {
       value.forEach((element) {
         User user = User.fromJson(element);
@@ -102,6 +106,9 @@ class _LoginPageState extends State<LoginPage> {
     getPrefPassword().then((value) {
       password = value;
     });
+
+    print("ISSDDBBBBEEXXIISST : $isDbExist");
+    print("ISSDDBBBBNOTEXISSt : $isDbNotExist");
 
     return WillPopScope(
       onWillPop: () async {
@@ -177,6 +184,7 @@ class _LoginPageState extends State<LoginPage> {
                             if (value!.length < 5) {
                               return 'Password tidak valid';
                             } else if (value != password) {
+                              print('PASWORDDDDD : $password');
                               return 'Password salah';
                             }
                           },

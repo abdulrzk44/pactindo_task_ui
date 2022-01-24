@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pactindo_task_ui/data/database/db_user.dart';
 import 'package:pactindo_task_ui/data/repository/account_repository.dart';
 import 'package:pactindo_task_ui/feature/splash_screen/splash_screen_bloc.dart';
 import 'package:pactindo_task_ui/feature/splash_screen/splash_screen_event.dart';
@@ -27,7 +26,7 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
-  final CrudUser _crudUser = CrudUser();
+  // final CrudUser _crudUser = CrudUser();
   SplashScreenBloc? _bloc;
 
   @override

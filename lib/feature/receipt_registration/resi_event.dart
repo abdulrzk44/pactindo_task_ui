@@ -13,3 +13,10 @@ class SubmitResi extends ResiEvent {
 
   SubmitResi({required this.user});
 }
+
+class PrefResi extends ResiEvent {
+  final String username;
+  final String password;
+
+  PrefResi({required this.username, required this.password});
+}

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
-import 'package:pactindo_task_ui/data/database/db_user.dart';
 import 'package:pactindo_task_ui/data/repository/registration_repository.dart';
 import 'package:pactindo_task_ui/feature/receipt_registration/resi_bloc.dart';
 import 'package:pactindo_task_ui/feature/receipt_registration/resi_event.dart';
@@ -43,6 +42,14 @@ class _ResiPageState extends State<ResiPage> {
     initData();
   }
 
+  String username(){
+    return arguments[4];
+  }
+
+  String password(){
+    return arguments[5];
+  }
+
   initData() {
     String noKtp = arguments[0];
     String email = arguments[1];
@@ -61,8 +68,18 @@ class _ResiPageState extends State<ResiPage> {
         mpin: mpin);
   }
 
-  final CrudUser _crudUser = new CrudUser();
+  // void savePref() async {
+  //   SharedPreferences preferences = await SharedPreferences.getInstance();
+  //   preferences.setString("username", username);
+  //   preferences.setString("password", password);
+  //   String? user = preferences.getString("username");
+  //   String? pwd = preferences.getString("password");
+  //   print("UUUUUUUUSSSSSEEERRRR : $user");
+  //   print("PPPPWWWWWDDDDDDDDDDD : $pwd");
+  // }
 
+  // final CrudUser _crudUser = new CrudUser();
+  //
   final List<String> fieldData = [
     "Nomor Ktp",
     "Email",
@@ -87,9 +104,10 @@ class _ResiPageState extends State<ResiPage> {
           if (state is SubmitResiLoading) {
             Loader.show(context,
                 isAppbarOverlay: true,
-                isBottomBarOverlay: true,
-                themeData:
-                    Theme.of(context).copyWith(accentColor: Colors.black38),
+                isBottomBarOverlay: false,
+                progressIndicator: CircularProgressIndicator(),
+                themeData: Theme.of(context)
+                    .copyWith(accentColor: Colors.black38),
                 overlayColor: Color(0x99E8EAF6));
           } else if (state is SubmitResiLoaded) {
             Loader.hide();
@@ -100,8 +118,18 @@ class _ResiPageState extends State<ResiPage> {
           }
         },
         child: ListView.builder(
-          itemCount: fieldData.length,
+          itemCount: fieldData.length + 1,
           itemBuilder: (context, index) {
+            if (index == fieldData.length) {
+              return ElevatedButton(
+                onPressed: () {
+                  _bloc!.add(SubmitResi(user: user));
+                  _bloc!.add(PrefResi(username: username(), password: password()));
+                  // _crudUser.insert({"no_ktp":noKtp, "email":email, "no_telepon":phoneNumber, "kode_otp":otpCode, "username":username, "password":password, "mpin":mpin,});
+                },
+                child: Text('Selanjutnya'),
+              );
+            }
             return Row(
               children: <Widget>[
                 Flexible(
@@ -123,13 +151,6 @@ class _ResiPageState extends State<ResiPage> {
                   ),
                 ),
                 SizedBox(height: 15),
-                ElevatedButton(
-                  onPressed: () {
-                    _bloc!.add(SubmitResi(user: user));
-                    // _crudUser.insert({"no_ktp":noKtp, "email":email, "no_telepon":phoneNumber, "kode_otp":otpCode, "username":username, "password":password, "mpin":mpin,});
-                  },
-                  child: Text('Selanjutnya'),
-                ),
               ],
             );
           },

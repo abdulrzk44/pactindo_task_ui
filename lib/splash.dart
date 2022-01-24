@@ -5,7 +5,7 @@ import 'package:pactindo_task_ui/feature/email.dart';
 import 'package:pactindo_task_ui/feature/eula.dart';
 import 'package:pactindo_task_ui/feature/home.dart';
 import 'package:pactindo_task_ui/feature/ktp.dart';
-import 'package:pactindo_task_ui/feature/login.dart';
+import 'package:pactindo_task_ui/feature/login/login.dart';
 import 'package:pactindo_task_ui/feature/mpin.dart';
 import 'package:pactindo_task_ui/feature/otp.dart';
 import 'package:pactindo_task_ui/feature/password.dart';

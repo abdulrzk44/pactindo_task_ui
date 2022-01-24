@@ -16,6 +16,14 @@ class ResiBloc extends Bloc {
         } catch (e) {
           emit(SubmitResiFailed(error: e.toString()));
         }
+      }else if (event is PrefResi) {
+        emit(SubmitResiLoading());
+        try {
+          final response2 = await registrationRepository!.savePref(event.username, event.password);
+          emit(SubmitResiLoaded(response: response2));
+        } catch (e) {
+          emit(SubmitResiFailed(error: e.toString()));
+        }
       }
     });
   }
