@@ -22,38 +22,36 @@ class CrudUser {
     final dbPath = await sqlite.getDatabasesPath();
     return sqlite.openDatabase(path.join(dbPath, 'user_data.db'),
         onCreate: (db, version) async {
-            await db.execute(table).then((value) {
-              print("berashil ");
-            }).catchError((err) {
-              print("errornya ${err.toString()}");
-            });
-          print('Table Created');
-        }, version: 1);
+      await db.execute(table).then((value) {
+        print("berashil ");
+      }).catchError((err) {
+        print("errornya ${err.toString()}");
+      });
+      print('Table Created');
+    }, version: 1);
   }
 
-  Future<bool> checkDB(){
+  Future<bool> checkDB() {
     return sqlite.databaseExists('user_data.db');
   }
 
-  insert(Map<String, Object> data) {
-    openDB().then((db) {
-      Future <int> insert(Map<String, Object> data) async{
-        int result = 1;
-        await openDB().then((db) {
-          db.insert(UserQuery.TABLE_NAME, data, conflictAlgorithm: ConflictAlgorithm.replace);
-          result = 0;
-        }).catchError((err) {
-          result = 1;
-          print("error $err");
-        });
-        return result;
-      }
+  insert(Map<String, Object> data) async {
+    int result = 1;
+    await openDB().then((db) {
+      db.insert(UserQuery.TABLE_NAME, data,
+          conflictAlgorithm: ConflictAlgorithm.replace);
+      result = 0;
+    }).catchError((err) {
+      result = 1;
+      print("error $err");
     });
+    return result;
   }
 
   update(Map<String, Object> data) {
     openDB().then((db) {
-      db.update(UserQuery.TABLE_NAME, data, where: "id = 1", conflictAlgorithm: ConflictAlgorithm.replace);
+      db.update(UserQuery.TABLE_NAME, data,
+          where: "id = 1", conflictAlgorithm: ConflictAlgorithm.replace);
     }).catchError((err) {
       print("error $err");
     });
@@ -65,4 +63,3 @@ class CrudUser {
     return result.toList();
   }
 }
-

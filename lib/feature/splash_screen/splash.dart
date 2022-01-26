@@ -1,17 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pactindo_task_ui/data/repository/account_repository.dart';
+import 'package:pactindo_task_ui/data/repository/check_account_repository.dart';
 import 'package:pactindo_task_ui/feature/splash_screen/splash_screen_bloc.dart';
 import 'package:pactindo_task_ui/feature/splash_screen/splash_screen_event.dart';
 import 'package:pactindo_task_ui/feature/splash_screen/splash_screen_state.dart';
 
 class SplashScreenBuilder extends StatelessWidget {
-  const SplashScreenBuilder({ Key? key }) : super(key: key);
+  const SplashScreenBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(create: (BuildContext context) => SplashScreenBloc(accountRepository: AccountRepository()),
+    return BlocProvider(
+      create: (BuildContext context) =>
+          SplashScreenBloc(checkaccountRepository: CheckAccountRepository()),
       child: Splash(),
     );
   }
@@ -19,6 +21,7 @@ class SplashScreenBuilder extends StatelessWidget {
 
 class Splash extends StatefulWidget {
   static const String routes = "/splash_screen";
+
   const Splash({Key? key}) : super(key: key);
 
   @override
@@ -53,9 +56,7 @@ class _SplashState extends State<Splash> {
             } else {
               Navigator.pushNamed(context, '/eula');
             }
-          } else if (state is CheckUserFailed) {
-            
-          }
+          } else if (state is CheckUserFailed) {}
         },
         child: Center(
             child: lightMode

@@ -3,7 +3,7 @@ import 'package:pactindo_task_ui/model/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RegistrationRepository {
-  final CrudUser _crudUser = CrudUser();
+  final CrudUser _crudUser = new CrudUser();
 
   Future<int> savePref(String username, String password) async {
     int result = 1;
@@ -18,7 +18,7 @@ class RegistrationRepository {
   }
 
   Future<int> registrationSubmit({User? user}) async {
-    int result = 1;
+    var result;
     try {
       result = await _crudUser.insert({
         "no_ktp": user!.noKtp!,
@@ -32,6 +32,6 @@ class RegistrationRepository {
     } catch (e) {
       Exception(e);
     }
-    return result;
+    return int.tryParse(result!)!;
   }
 }

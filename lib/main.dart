@@ -79,7 +79,7 @@ class MyHomePage extends StatelessWidget {
             '/mpin': (ctx) => MpinPage(),
             '/confirm_mpin': (ctx) => ConfirmMpinPage(),
             '/resi': (ctx) => ResiBuilder(),
-            '/login': (ctx) => LoginPage(),
+            '/login': (ctx) => LoginBuilder(),
             '/splash_screen': (ctx) => SplashScreenBuilder(),
           },
         );

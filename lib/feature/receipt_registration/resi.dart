@@ -68,16 +68,6 @@ class _ResiPageState extends State<ResiPage> {
         mpin: mpin);
   }
 
-  // void savePref() async {
-  //   SharedPreferences preferences = await SharedPreferences.getInstance();
-  //   preferences.setString("username", username);
-  //   preferences.setString("password", password);
-  //   String? user = preferences.getString("username");
-  //   String? pwd = preferences.getString("password");
-  //   print("UUUUUUUUSSSSSEEERRRR : $user");
-  //   print("PPPPWWWWWDDDDDDDDDDD : $pwd");
-  // }
-
   // final CrudUser _crudUser = new CrudUser();
   //
   final List<String> fieldData = [
@@ -111,8 +101,23 @@ class _ResiPageState extends State<ResiPage> {
                 overlayColor: Color(0x99E8EAF6));
           } else if (state is SubmitResiLoaded) {
             Loader.hide();
-            Navigator.pushNamed(context, '/login');
+            _bloc!.add(PrefResi(username: username(), password: password()));
           } else if (state is SubmitResiFailed) {
+            Loader.hide();
+            errorDialog(context, state.error);
+            _bloc!.add(PrefResi(username: username(), password: password()));
+          } else if (state is SubmitSharePrefsLoading) {
+            Loader.show(context,
+                isAppbarOverlay: true,
+                isBottomBarOverlay: false,
+                progressIndicator: CircularProgressIndicator(),
+                themeData: Theme.of(context)
+                    .copyWith(accentColor: Colors.black38),
+                overlayColor: Color(0x99E8EAF6));
+          } else if (state is SubmitSharePrefsLoaded) {
+            Loader.hide();
+            Navigator.pushNamed(context, '/login');
+          } else if (state is SubmitSharePrefsFailed) {
             Loader.hide();
             errorDialog(context, state.error);
           }
@@ -124,7 +129,6 @@ class _ResiPageState extends State<ResiPage> {
               return ElevatedButton(
                 onPressed: () {
                   _bloc!.add(SubmitResi(user: user));
-                  _bloc!.add(PrefResi(username: username(), password: password()));
                   // _crudUser.insert({"no_ktp":noKtp, "email":email, "no_telepon":phoneNumber, "kode_otp":otpCode, "username":username, "password":password, "mpin":mpin,});
                 },
                 child: Text('Selanjutnya'),
