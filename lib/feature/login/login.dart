@@ -65,9 +65,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    late String username;
-    late String password;
-
     return WillPopScope(
       onWillPop: () async {
         return false;
@@ -83,13 +80,31 @@ class _LoginPageState extends State<LoginPage> {
                   isAppbarOverlay: true,
                   isBottomBarOverlay: false,
                   progressIndicator: CircularProgressIndicator(),
-                  themeData: Theme.of(context)
-                      .copyWith(accentColor: Colors.black38),
+                  themeData:
+                      Theme.of(context).copyWith(accentColor: Colors.black38),
                   overlayColor: Color(0x99E8EAF6));
             } else if (state is DefaultLoginLoaded) {
-              username = state.response[0];
-              password = state.response[1];
+              String username = state.response[0];
+              String password = state.response[1];
               Loader.hide();
+              if (_inputController.text == username &&
+                  _inputController2.text == password) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("Login Sukses"),
+                  ),
+                );
+                Navigator.pushNamed(context, '/home');
+              } else {
+                print('USERNAMEEEE : $username');
+                print('PASWORDDDDD : $password');
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("Login Gagal"),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+              }
             } else if (state is DefaultLoginFailed) {
               Loader.hide();
               errorDialog(context, state.error);
@@ -98,8 +113,8 @@ class _LoginPageState extends State<LoginPage> {
                   isAppbarOverlay: true,
                   isBottomBarOverlay: false,
                   progressIndicator: Text(''),
-                  themeData: Theme.of(context)
-                      .copyWith(accentColor: Colors.black38),
+                  themeData:
+                      Theme.of(context).copyWith(accentColor: Colors.black38),
                   overlayColor: Color(0x99E8EAF6));
             } else if (state is BiometricLoginLoaded) {
               Navigator.pushNamed(context, '/home');
@@ -144,9 +159,6 @@ class _LoginPageState extends State<LoginPage> {
                             validator: (value) {
                               if (value!.length < 5) {
                                 return 'Username tidak valid';
-                              } else if (value != username) {
-                                print('USERNAMEEE : $username');
-                                return 'Username tidak terdaftar';
                               }
                               return null;
                             },
@@ -175,9 +187,6 @@ class _LoginPageState extends State<LoginPage> {
                             validator: (value) {
                               if (value!.length < 5) {
                                 return 'Password tidak valid';
-                              } else if (value != password) {
-                                print('PASWORDDDDD : $password');
-                                return 'Password salah';
                               }
                             },
                           ),
@@ -203,13 +212,8 @@ class _LoginPageState extends State<LoginPage> {
                           minimumSize: Size.fromHeight(50),
                         ),
                         onPressed: () {
-                          _bloc!.add(DefaultLogin());
                           if (_formKey.currentState!.validate()) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Login Sukses')),
-                            );
-                            Navigator.pushNamed(context, '/home');
-                            // _inputController.dispose();
+                            _bloc!.add(DefaultLogin());
                           }
                         }),
                   ),
@@ -224,7 +228,7 @@ class _LoginPageState extends State<LoginPage> {
                     height: 40,
                   ),
                   ElevatedButton(
-                    onPressed: (){
+                    onPressed: () {
                       _bloc!.add(BiometricLogin());
                     },
                     style: ElevatedButton.styleFrom(

@@ -1,8 +1,10 @@
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -78,26 +80,6 @@ class _HomePageState extends State<HomePage> {
 class Beranda extends StatelessWidget {
   Beranda({Key? key}) : super(key: key);
 
-  final List<Container> myGrid = List.generate(8, (index) {
-    final List<String> gridText = [
-      'Rekening Saya',
-      'Transfer',
-      'Pembelian',
-      'Pembayaran',
-      'Favorit',
-      'Transaksi Terjadwal',
-      'Layanan Islami',
-      'Semua Menu'
-    ];
-    return Container(
-      child: Center(child: Text(gridText[index])),
-      decoration: BoxDecoration(
-        color: Color.fromARGB(255, Random().nextInt(255), Random().nextInt(255),
-            Random().nextInt(255)),
-        borderRadius: BorderRadius.circular(5),
-      ),
-    );
-  });
   final List<Color> myColor = [
     Colors.orange,
     Colors.blue,
@@ -108,6 +90,7 @@ class Beranda extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("CONTEXXXX = $context");
     return Column(
       children: [
         Container(
@@ -165,7 +148,38 @@ class Beranda extends StatelessWidget {
                   crossAxisSpacing: 20,
                   mainAxisSpacing: 20,
                   crossAxisCount: 4,
-                  children: myGrid,
+                  children: List.generate(8, (index) {
+                    final List<String> gridText = [
+                      'Rekening Saya',
+                      'Transfer',
+                      'Pembelian',
+                      'Pembayaran',
+                      'Favorit',
+                      'Transaksi Terjadwal',
+                      'Layanan Islami',
+                      'Semua Menu'
+                    ];
+                    return InkWell(
+                      onTap: () {
+                        if (gridText[index] == 'Semua Menu') {
+                          showCupertinoModalBottomSheet(
+                            expand: true,
+                            context: context,
+                            backgroundColor: Colors.transparent,
+                            builder: (context) => MenuBottomSheet(),
+                          );
+                        }
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, Random().nextInt(255),
+                              Random().nextInt(255), Random().nextInt(255)),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Text(gridText[index]),
+                      ),
+                    );
+                  }),
                 ),
               ),
               Container(
@@ -193,6 +207,70 @@ class Beranda extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class MenuBottomSheet extends StatelessWidget {
+  const MenuBottomSheet({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+        child: Material(
+            color: Colors.transparent,
+            child: Scaffold(
+              backgroundColor: CupertinoTheme.of(context)
+                  .scaffoldBackgroundColor
+                  .withOpacity(0.95),
+              extendBodyBehindAppBar: true,
+              body: CustomScrollView(
+                physics: ClampingScrollPhysics(),
+                controller: ModalScrollController.of(context),
+                slivers: <Widget>[
+                  SliverSafeArea(
+                    bottom: false,
+                    sliver: SliverToBoxAdapter(
+                      child: Container(
+                        height: 318,
+                        child: ListView(
+                          padding: EdgeInsets.all(12).copyWith(
+                              right:
+                                  MediaQuery.of(context).size.width / 2 - 100),
+                          reverse: true,
+                          scrollDirection: Axis.horizontal,
+                          physics: PageScrollPhysics(),
+                          children: <Widget>[],
+                        ),
+                      ),
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: Divider(height: 1),
+                  ),
+                  sliverContactsSection(context),
+                  SliverToBoxAdapter(
+                    child: Divider(height: 1),
+                  ),
+                  SliverSafeArea(
+                    top: false,
+                    sliver: SliverPadding(
+                        padding: EdgeInsets.only(
+                      bottom: 20,
+                    )),
+                  )
+                ],
+              ),
+            )));
+  }
+
+  Widget sliverContactsSection(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Container(
+        height: 132,
+        padding: EdgeInsets.only(top: 12),
+      ),
     );
   }
 }

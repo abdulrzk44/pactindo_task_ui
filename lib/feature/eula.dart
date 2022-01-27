@@ -46,68 +46,61 @@ class _EulaPageState extends State<EulaPage> {
           if (snapshot.hasData) {
             /* Cek apakah datanya ada atau tidak, kalau ada tampilkan widget webview, kalau tidak tampilkan loading */
             return Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.77,
-                    child: WebView(
-                      initialUrl:
-                          'data:text/html;base64,${base64Encode(const Utf8Encoder().convert(snapshot.data.eulaHtml))}',
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(8.0),
-                    height: MediaQuery.of(context).size.height * 0.105,
-                    // color: Colors.blue,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Checkbox(
-                            value: isChecked,
-                            onChanged: (bool? value) {
-                              /* Set state ketika checkbox ditap/dikasih action */
-                              setState(() {
-                                isChecked = value!;
-                              });
-                            }),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          child: TextButton(
-                            style: TextButton.styleFrom(
-                              backgroundColor: Colors.orange,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                            ),
-                            onPressed: () {
-                              if (isChecked) {
-                                /* Kasih validasi kalau checkbox belum diceklis, button gaboleh ada aksi */
-                                Navigator.pushNamed(context, '/ktp');
-                                setState(() {
-                                  isChecked = false;
-                                });
-                                print('I Agree Clicked');
-                              }
-                            },
-                            child: Text(
-                              "I Agree",
-                              style: TextStyle(
-                                fontSize: 17,
-                                color: Color(0xffffffff),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+              height: MediaQuery.of(context).size.height,
+              child: WebView(
+                initialUrl:
+                    'data:text/html;base64,${base64Encode(const Utf8Encoder().convert(snapshot.data.eulaHtml))}',
               ),
             );
           }
           return Center(child: CircularProgressIndicator());
         },
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: SizedBox(
+          height: 70,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Checkbox(
+                  value: isChecked,
+                  onChanged: (bool? value) {
+                    /* Set state ketika checkbox ditap/dikasih action */
+                    setState(() {
+                      isChecked = value!;
+                    });
+                  }),
+              Container(
+                width: MediaQuery.of(context).size.width * 0.8,
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.orange,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  onPressed: () {
+                    if (isChecked) {
+                      /* Kasih validasi kalau checkbox belum diceklis, button gaboleh ada aksi */
+                      Navigator.pushNamed(context, '/ktp');
+                      setState(() {
+                        isChecked = false;
+                      });
+                      print('I Agree Clicked');
+                    }
+                  },
+                  child: Text(
+                    "I Agree",
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: Color(0xffffffff),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
